@@ -3,6 +3,7 @@
 ⚠️ **Note:** Content for each section will be added soon 🙂  
 
 ## Overview
+<center><img src="figures/approach-overview.png" alt="Architecture of STELLAR" width="400"></center>
 
 ## Links
 

@@ -1,5 +1,8 @@
 
-# Simple Navigation Recommendation System
+# ConvNavi: Simple Navigation Recommendation System
+## Architecture
+
+<center><img src="naviqa/figures/architecture.png" alt="Architecture of ConvNavi" width="400"></center>
 
 ## Setup Instructions
 
@@ -106,7 +109,7 @@ Hi, direct me to a fine Italian restaurant with more than 4 stars.
 **Description:** Checks for the existence of POIs matching given constraints.
 
 **Request Schema (`POIQueryRequest`):**
-- Optional filters: `category`, `cuisine`, `price_level`, `radius_km`, `open_now`, `rating`, `name`, `user_location`.
+- Optional filters: `category`, `cuisine`, `price_level`, `radius_km`, `open_now`, `rating`, `name`, `user_location`, `parking`, `payment`.
 
 **Response Schema (`POIExistsResponse`):**
 - `exists` (bool): Indicates if matching POIs exist.

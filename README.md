@@ -5,10 +5,14 @@
 ## Overview
 <center><img src="figures/approach-overview.png" alt="Architecture of STELLAR" width="400"></center>
 
+STELLAR is a modular search-based testing framework for testing LLM-based Applications. It is built on top of OpenSBT.
+
 ## Links
 
-[Go to Installation](installation.md)
+[Go to STELLAR Tool](./stellar/)
 
-[Go to Getting Started](getting_started.md)
+[Go to Conversation Navi Tool](./naviqa/)
+
+[Go to Detailed Results](./results/)
 
 [Go to Supplementary Material](supplementary_material.pdf)

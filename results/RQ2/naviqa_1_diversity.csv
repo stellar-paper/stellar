@@ -1,0 +1,13 @@
+Model,Strategy,Mean Coverage (%),Std. Dev. (%)
+IPA_YELP_gpt-5-chat,STELLAR,96.6,4.49
+IPA_YELP_gpt-5-chat,Random,87.67,14.62
+IPA_YELP_gpt-5-chat,T-wise,87.0,14.58
+IPA_YELP_DeepSeek-V3-0324,STELLAR,100.0,0.0
+IPA_YELP_DeepSeek-V3-0324,Random,100.0,0.0
+IPA_YELP_DeepSeek-V3-0324,T-wise,100.0,0.0
+IPA_YELP_gpt-4o,STELLAR,100.0,0.0
+IPA_YELP_gpt-4o,Random,100.0,0.0
+IPA_YELP_gpt-4o,T-wise,100.0,0.0
+IPA_YELP_mistral,STELLAR,100.0,0.0
+IPA_YELP_mistral,Random,100.0,0.0
+IPA_YELP_mistral,T-wise,100.0,0.0

@@ -1,2 +1,3 @@
 setup_ssh.sh
 *.py
+rm_meta.sh

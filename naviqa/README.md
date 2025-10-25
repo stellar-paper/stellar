@@ -2,7 +2,7 @@
 # ConvNavi: Simple Navigation Recommendation System
 ## Architecture
 
-<center><img src="naviqa/figures/architecture.png" alt="Architecture of ConvNavi" width="400"></center>
+<center><img src="./figures/architecture.svg" alt="Architecture of ConvNavi" width="600"></center>
 
 ## Setup Instructions
 

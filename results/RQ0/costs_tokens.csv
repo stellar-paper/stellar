@@ -1,0 +1,6 @@
+model,input_cost_per_1k_tokens (dollar),output_cost_per_1k_tokens (dollar)
+gpt-4o,0.0025,0.01
+gpt-4o-mini,0.00015,0.0006
+gpt-35-turbo,0.0005,0.0015
+gpt-5-chat,0.00125,0.01
+DeepSeek-V3-0324,0.00114,0.00456

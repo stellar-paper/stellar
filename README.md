@@ -10,7 +10,7 @@ Please note, that results are provided partially in the repository as well as in
 
 ## Links
 
-[Go to STELLAR Tool](./stellar/)
+[Go to STELLAR Tool / Replication Instructions](./stellar/)
 
 [Go to Conversation Navi Tool](./naviqa/)
 

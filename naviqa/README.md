@@ -1,5 +1,5 @@
 
-# ConvNavi: Simple Navigation Recommendation System
+# ConvNavi: Navigation Recommendation System
 ## Architecture
 
 <center><img src="./figures/architecture.svg" alt="Architecture of ConvNavi" width="600"></center>

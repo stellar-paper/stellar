@@ -23,7 +23,7 @@ To run a simplified example with a non-LLM related problem run to verify install
 python run.py -e 2
 ```
 
-The configuration for LLM related experiments is done via the config.py as well as directly by passing arguments via flags to a corresponding function.
+The configuration for LLM related experiments is done via the [config.py](./llm/config.py) as well as directly by passing arguments via flags to a corresponding function.
 
 Make sure to provide an OpenAI/Azure OpenAI API key in [.env](./.env) to use cloud models. Note, that also local models can be used, as part of the paper experiments is using local models from [Ollama](https://ollama.com). For local models, make sure that they have been downloaded via Ollama locally, and the hardware requirements are satisfied to able to deploy the models appropriately.
 
@@ -93,7 +93,7 @@ for SAMPLE in "${SAMPLES[@]}"; do
         --plot_efficiency_file "${OUT_DIR}/model_efficiency.png" \
         --plot_f1_file "${OUT_DIR}/model_f1_score.png"
 
-      echo "Done. Logs saved in ${OUT_DIR}/run.log"
+      echo "Done."
     else
       echo "No validation-repeat CSV found in ${RUN_DIR}"
     fi
@@ -103,15 +103,15 @@ done
 
 You can then run the statistical tests with:
 
-```bash
-bash run_statistical_test.sh
+```
+bash analysis/rq0/run_statistical_test.sh
 ```
 
 ### RQ1
 
 #### SafeQA
 
-To replicate SafeQA experiments you can run the following command. As seeds numbers between 1 and 6 have been used:
+To replicate SafeQA experiments you can run the following command. As seeds, numbers between 1 and 6 have been used in the paper:
 
 ```bash
 DATE=$(date +%d-%m-%Y)

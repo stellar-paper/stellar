@@ -1,0 +1,5 @@
+algorithm,deepseek-v2_mean,deepseek-v2_std,mistral_mean,mistral_std,DeepSeek-V3-0324_mean,DeepSeek-V3-0324_std,gpt-5-chat_mean,gpt-5-chat_std,qwen3_mean,qwen3_std,gpt-4o_mean,gpt-4o_std
+ASTRAL,55.90,3.00,58.86,2.44,64.12,2.63,92.68,22.86,60.90,3.01,78.17,31.05
+T-wise,89.82,2.59,90.50,1.99,88.95,2.15,96.00,12.99,91.07,3.85,92.97,13.06
+Random,89.40,2.92,91.08,1.66,89.92,2.61,96.38,12.83,90.79,3.40,92.43,11.12
+STELLAR,78.85,3.91,82.63,3.15,78.77,3.07,97.85,7.81,86.15,3.31,95.00,10.63

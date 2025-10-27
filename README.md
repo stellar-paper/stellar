@@ -1,6 +1,6 @@
 # Replication package for the paper: "STELLAR: A Search-based Testing Framework for Large Language Model Applications"
 
-⚠️ **Note:** Content for each section will be added soon 🙂  
+⚠️ **Note:** Content for each section will be updated soon 🙂  
 
 ## Overview
 <center><img src="figures/approach-overview.png" alt="Architecture of STELLAR" width="400"></center>

@@ -1,8 +1,10 @@
 
 # ConvNavi: POI Recommendation System
-## Architecture
+## Overview
 
-<center><img src="./figures/architecture.svg" alt="Architecture of ConvNavi" width="600"></center>
+<p align="center"><img src="./figures/architecture.svg" alt="Architecture of ConvNavi" width="600"></p>
+
+Convnavi is a prototypical research implementation of a navigational/Point-of-Interest (POI) recommendation system. It receives as input textual requests regarding POIs and returns POIs from a database that should satisfy POI constraints/attributes provided in the input. The system is using internally an LLM to convert requests into a structured representation to retrieve a set of useful POIs from the database using Retrieval Augmented Generation (RAG). It returns afterwards to the user an LLM-based summerization of the found POIs and the found POIs.
 
 ## Setup Instructions
 

@@ -1,14 +1,15 @@
 # Replication package for the paper: "STELLAR: A Search-based Testing Framework for Large Language Model Applications"
 
-⚠️ **Note:** Content for each section will be updated soon 🙂  
-
 ## Overview
-<center><img src="figures/approach-overview.png" alt="Architecture of STELLAR" width="400"></center>
-
-STELLAR is a modular search-based testing framework for testing LLM-based Applications. It is built on top of OpenSBT.
-Please note, that results are provided partially in the repository as well as in the supplementary pdf.
+<p align="center">
+  <img src="figures/approach-overview.png" alt="Architecture of STELLAR" width="400">
+</p>
+STELLAR is a modular search-based testing framework for testing LLM-based Applications. It is built on top of [OpenSBT](www.github.com/opensbt).
+Please note, that results are provided partially in the repository as well as in the supplementary pdf in the links below.
 
 ## Links
+
+Please click on the corresponding links below to find more information:
 
 [Go to STELLAR Tool / Replication Instructions](./stellar/)
 

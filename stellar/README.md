@@ -4,11 +4,38 @@
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 [![OpenSBT](https://img.shields.io/badge/built_on-OpenSBT-purple.svg)](https://github.com/opensbt/opensbt-core)
 
-STELLAR is a search-based testing framework to automatically and dynamically validate LLM-driven Applications. STELLAR builds upon OpenSBT which is based on [Pymoo](https://pymoo.org/) 0.6.1.5.
+<p align="center">
+  <img src="../figures/approach-overview.png" alt="Architecture of STELLAR" width="400">
+</p>
 
+STELLAR is a modular search-based testing framework for evaluating LLM-based applications. It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure which is based on [Pymoo](https://pymoo.org/) 0.6.1.5. STELLAR provides the following core capabilities:
+
+1. Integration of content, stylistic and perturbation features for test input generation & feature constraint handling.
+2. Automated test input generation using prompting and RAG-integration.
+3. Fitness evaluation leveraging LLM-based judgments alongside conventional similarity metrics (e.g., cosine similarity).
+4. Search-based fitness optimization to support effectiv/efficient failure localization.
+
+## Project Structure 
+
+```bash
+stellar/
+│
+├── analysis/            # Paper analysis scripts
+├── configs/             # Feature config files
+├── examples/            # Implementation of use cases Navi and Safety
+├── judge_eval/          # Files for the judge evaluation
+├── llm/                 # Main folder extending OpenSBT to support LLM Testing
+├── opensbt/             # OpenSBT Base Folder
+├── .env-example         # Example .env file to use cloud LLMs
+├── README.md            # Project overview
+├── requirements.txt     # Dependencies
+├── run_tests_navi.py    # Run navi case study
+└── run_tests_safety.py  # Run safety case study
+```
 ## Installation
 
-STELLAR requires Python to be installed and its compatibility has been tested with Python 3.11. 
+STELLAR requires Python to be installed and its compatibility has been tested with Python 3.11. STELLAR does **not** require GPU resources if cloud LLMs are used.
+
 You can install dependencies via:
 
 ```bash
@@ -27,7 +54,27 @@ The configuration for LLM related experiments is done via the [config.py](./llm/
 
 Make sure to provide an OpenAI/Azure OpenAI API key in [.env](./.env) to use cloud models. Note, that also local models can be used, as part of the paper experiments is using local models from [Ollama](https://ollama.com). For local models, make sure that they have been downloaded via Ollama locally, and the hardware requirements are satisfied to able to deploy the models appropriately.
 
-**Hardware Requirements:** Note, that STELLAR does not require a GPU if only cloud models are used.
+To run a simplified example where an LLM is asked to provide a place recommendation:
+
+```python
+DEPLOYMENT_NAME="gpt-4o-mini" python run_tests_navi.py \
+        --sut "IPA_YELP" \
+        --population_size 5 \
+        --n_generations 5 \
+        --algorithm "nsga2" \
+        --max_time "00:10:00" \
+        --features_config "configs/navi_features.json"\
+        --use_repair \
+        --no_wandb \
+        --use_rag \
+        --seed 1
+```
+
+The execution should generate 25 test cases and write down all results in a folder called **results**.
+
+For input generation, STELLAR distinguishes between style, content and perturbation features. 
+The features are defined in the format as implemented in [navi_features.json](configs/navi_features.json).
+You can modify theses values to see how it affects generated test inputs.
 
 ## Replication
 
@@ -211,3 +258,10 @@ python -m analysis.rq12.get_analysis_navi
 ```
 
 You can set the oracle threshold using __th_content=0.75__ and  __th_response=0.75__ to observe how the metrics results vary when the oracle changes.
+
+
+## Customization
+
+You can define your own custom problem as done for the Safety or Navigation case study. 
+We have provided interfaces and instructions as described in [CUSTOMIZATION](CUSTOMIZATION.md).
+

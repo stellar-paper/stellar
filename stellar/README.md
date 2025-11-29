@@ -17,6 +17,8 @@ STELLAR is a modular search-based testing framework for evaluating LLM-based app
 
 ## Project Structure 
 
+The project’s structure is outlined below as a high-level overview, omitting detailed files and scripts.
+
 ```bash
 stellar/
 │
@@ -32,6 +34,7 @@ stellar/
 ├── run_tests_navi.py    # Run navi case study
 └── run_tests_safety.py  # Run safety case study
 ```
+
 ## Installation
 
 STELLAR requires Python to be installed and its compatibility has been tested with Python 3.11. STELLAR does **not** require GPU resources if cloud LLMs are used.

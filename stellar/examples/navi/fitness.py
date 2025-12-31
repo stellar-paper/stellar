@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Tuple, List, Dict, Optional
+from typing import Tuple, Dict, Optional
 
 import numpy as np
 
@@ -7,7 +7,6 @@ from judge_eval.validator_dim import llm_validator_question_answer
 from examples.navi.models import NaviContentInput, NaviContentOutput
 from opensbt.evaluation.fitness import Fitness
 from llm.model.qa_simout import QASimulationOutput
-from llm.validation.validator import llm_validator, llm_output_validator
 from llm.config import N_VALIDATORS
 from llm.utils.embeddings_local import get_similarity
 from llm.eval.fitness import counter_validations
@@ -58,35 +57,6 @@ class NaviFitnessAnswerValidationDimensions(Fitness):
         counter_validations += 1
         print("counter_validations", counter_validations)
         return (final_score,)
-
-class NaviFitnessAnswerValidation(Fitness):
-    def __init__(self, llm_type=None):
-        self.llm_type = llm_type
-        super().__init__()
-
-    @property
-    def min_or_max(self):
-        return ("min",)
-
-    @property
-    def name(self):
-        return ("answer_fitness",)
-
-    def eval(self, simout: QASimulationOutput, **kwargs) -> Tuple[float]:
-
-        global counter_validations
-
-        score = llm_validator(
-            question=simout.utterance.question,
-            answer=simout.utterance.answer,
-            n=N_VALIDATORS,
-            llm_type=self.llm_type,
-        )
-        # print("[FitnessAnswerValidation] score", score)
-        counter_validations += 1
-        print("counter_validations", counter_validations)
-        return (score,)
-
 
 class NaviFitnessContentComparison(Fitness):
     def __init__(
@@ -247,32 +217,3 @@ class NaviFitnessContentComparison(Fitness):
         simout.other["fitness_content"]["scores"] = field_scores_all[id]
         
         return (scores[id],)
-
-
-class NaviFitnessRawOutputValidator(Fitness):
-    def __init__(self, llm_type=None):
-        self.llm_type = llm_type
-        super().__init__()
-
-    @property
-    def min_or_max(self):
-        return ("min",)
-
-    @property
-    def name(self):
-        return ("raw_output_fitness",)
-
-    def _evaluate_raw_output(self, raw_output) -> float:
-        global counter_validations
-
-        score = llm_output_validator(
-            raw_output=raw_output, n=N_VALIDATORS, llm_type=self.llm_type
-        )
-        counter_validations += 1
-        return score
-
-    def eval(self, simout: QASimulationOutput, **kwargs) -> Tuple[float]:
-        raw_output = simout.utterance.raw_output
-        if raw_output is None:
-            return (1,)
-        return (self._evaluate_raw_output(raw_output),)

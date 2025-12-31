@@ -5,7 +5,6 @@ from llm.utils.nlp import compute_word_length
 from opensbt.evaluation.critical import Critical
 from opensbt.evaluation.fitness import Fitness
 from llm.model.qa_simout import QASimulationOutput
-from llm.validation.validator import llm_validator
 
 class CriticalAnswerValidation(Critical):
     def name():

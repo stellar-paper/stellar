@@ -16,7 +16,7 @@ from llm.model.qa_problem import QAProblem
 from llm.sut.ipa import IPA
 from examples.navi.navi_utterance_generator import NaviUtteranceGenerator
 from llm.eval.fitness import FitnessMerged, FitnessDiverse, FitnessNumberOfWords
-from examples.navi.fitness import NaviFitnessAnswerValidationDimensions, NaviFitnessAnswerValidation, NaviFitnessContentComparison, NaviFitnessRawOutputValidator
+from examples.navi.fitness import NaviFitnessAnswerValidationDimensions, NaviFitnessContentComparison
 from llm.eval.critical import CriticalMerged, CriticalByFitnessThreshold, CriticalAnswerLength
 from llm.operators.utterance_crossover_discrete import UtteranceCrossoverDiscrete
 from llm.operators.utterance_sampling_discrete import UtteranceSamplingDiscrete
@@ -159,7 +159,6 @@ fitness = FitnessMerged([
     NaviFitnessAnswerValidationDimensions(weights=args.judge_weights,
                                         llm_type=LLMType(args.judge)),
     NaviFitnessContentComparison(),
-    # NaviFitnessRawOutputValidator(),
     FitnessDiverse(),
     # FitnessNumberOfWords(),
 ])

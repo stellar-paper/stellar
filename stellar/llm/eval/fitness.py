@@ -8,12 +8,12 @@ from examples.navi.models import NaviContentInput, NaviContentOutput
 from llm.validation.validator_los import llm_validator_los, llm_validator_response_los
 from opensbt.evaluation.fitness import Fitness
 from llm.model.qa_simout import QASimulationOutput
-from llm.validation.validator import llm_validator, llm_output_validator
 from llm.validation.validator_category import llm_validator_category
 from llm.config import N_VALIDATORS
 from llm.utils.nlp import compute_word_length
 from llm.utils.embeddings_local import get_similarity
 from llm.llms import LLMType
+from llm.adapter.embeddings_local_adapter import get_disimilarity_individual
 
 counter_validations = 0
     
@@ -46,7 +46,6 @@ class FitnessAnswerValidationCategory(Fitness):
         print("counter_validations", counter_validations)
         return (score,)
     
-    
 class FitnessDiverse(Fitness):
     def __init__(self, diversify=False) -> None:
         super().__init__()
@@ -70,11 +69,11 @@ class FitnessDiverse(Fitness):
             else:
                 _, distance_archive = algorithm.archive_novelty.closest_individual_from_vars(
                                                 kwargs["individual"], 
-                                                dist_fnc = get_similarity_individual)
+                                                dist_fnc = get_disimilarity_individual)
+                print("Distance archive:", distance_archive)
         f_vector = (distance_archive,)
         return f_vector
     
-
 class FitnessNumberOfWords(Fitness):
     @property
     def min_or_max(self):

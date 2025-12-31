@@ -280,7 +280,7 @@ class SimulationResult(Result):
         )
 
         # visualizer_llm.design_space(self, save_folder)
-        llm_output.show_critical_heatmap_features(self, save_folder)
+        # llm_output.show_critical_heatmap_features(self, save_folder)
 
         visualizer.objective_space(self, save_folder)
         visualizer.optimal_individuals(self, save_folder)

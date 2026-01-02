@@ -1,5 +1,6 @@
-DEPLOYMENT_NAME="gpt-4o-mini" python run_tests_navi.py \
+DEPLOYMENT_NAME="llama3.2" python run_tests_navi.py \
         --sut "IPA_LOS" \
+        --judge "llama3.2" \
         --population_size 5 \
         --n_generations 5 \
         --algorithm "nsga2" \

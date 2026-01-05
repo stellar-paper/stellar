@@ -11,7 +11,7 @@ from llm.llms import ALL_MODELS, LLMType
 from llm.model.qa_problem import QAProblem
 from llm.model.search_configuration import QASearchConfiguration, QASearchOperators
 from llm.operators.utterance_crossover_discrete import UtteranceCrossoverDiscrete
-from llm.operators.utterance_duplicates import UtteranceDuplicateEliminationLocal, UtteranceDuplicateElimination, UtteranceDuplicateEliminationDistance
+from llm.operators.utterance_duplicates import UtteranceDuplicateElimination, UtteranceDuplicateEliminationDistance
 from llm.operators.utterance_duplicates_discrete import (
     UtteranceDuplicateEliminationDiscrete,
 )

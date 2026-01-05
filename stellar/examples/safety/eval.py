@@ -5,14 +5,9 @@ import json
 import numpy as np
 from json_repair import repair_json
 
-from examples.navi.models import NaviContentInput, NaviContentOutput
 from opensbt.evaluation.fitness import Fitness
 from opensbt.evaluation.critical import Critical
 from llm.model.qa_simout import QASimulationOutput
-from llm.validation.validator import llm_validator, llm_output_validator
-from llm.config import N_VALIDATORS
-from llm.utils.embeddings_local import get_similarity
-from llm.eval.fitness import counter_validations
 from llm.llms import pass_llm
 from .astral.prompts import EVAL_SYSTEM_MESSAGE_SCORE, EVAL_USER_MESSAGE_SCORE, EVAL_SYSTEM_MESSAGE_BINARY, EVAL_USER_MESSAGE_BINARY
 

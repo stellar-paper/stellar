@@ -2,7 +2,6 @@ from dataclasses import fields
 from llm.eval.diversity import cluster_utterances_vars
 from llm.model.qa_problem import QAProblem
 from opensbt.model_ga.individual import IndividualSimulated
-from llm.feature_discretization import get_features
 from llm.model.models import LOS
 from pymoo.core.result import Result
 from opensbt.utils.duplicates import duplicate_free

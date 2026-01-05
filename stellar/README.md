@@ -1,4 +1,4 @@
-# STELLAR - Search-based Testing of LLM Applications
+# STELLAR - A Search-based Testing Framework for Large Language Model Applications 
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
@@ -8,9 +8,9 @@
   <img src="../figures/approach-overview.png" alt="Architecture of STELLAR" width="400">
 </p>
 
-STELLAR is a modular search-based testing framework for evaluating LLM-based applications. It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure which is based on [Pymoo](https://pymoo.org/) 0.6.1.5. STELLAR provides the following core capabilities:
+STELLAR is a modular search-based testing framework for benchmarking LLM-based applications. It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure and is based on [Pymoo](https://pymoo.org/) 0.6.1.5. STELLAR provides the following core capabilities:
 
-1. Integration of content, stylistic and perturbation features for test input generation & feature constraint handling.
+1. Integration of content, stylistic and perturbation features for test generation & feature constraint handling
 2. Automated test input generation using prompting and RAG-integration.
 3. Fitness evaluation leveraging LLM-based judgments alongside conventional similarity metrics (e.g., cosine similarity).
 4. Search-based fitness optimization to support effectiv/efficient failure localization.
@@ -45,23 +45,28 @@ You can install dependencies via:
 pip install -r requirements.txt
 ```
 
+STELLAR can be used with local LLMs just as Llama3.2 or Mistral from [Ollama](https://ollama.com), as well as with LLMs deployed in the cloud (OpenAI). Configure the OpenAI endpoint and key via [.env](./.env).  
+
+When using local models, make sure that they have been downloaded via Ollama locally. Make sure hardware requirements are satisfied.
+
 ## Getting Started
 
-To run a simplified example with a non-LLM related problem run to verify installation:
+This framework integrates the following applications for testing:
 
-```python
-python run.py -e 2
-```
+- Standalone LLMs: Safety, Navigation Question Answering
+- [ConvNavi (RAG-based POI recommendations)](https://github.com/Leviathan321/ConvNavi): Navigation Question Answering
 
 The configuration for LLM related experiments is done via the [config.py](./llm/config.py) as well as directly by passing arguments via flags to a corresponding function.
 
-Make sure to provide an OpenAI/Azure OpenAI API key in [.env](./.env) to use cloud models. Note, that also local models can be used, as part of the paper experiments is using local models from [Ollama](https://ollama.com). For local models, make sure that they have been downloaded via Ollama locally, and the hardware requirements are satisfied to able to deploy the models appropriately.
 
-To run a simplified example where an LLM is asked to provide a place recommendation:
+### Navigation
 
-```python
-DEPLOYMENT_NAME="gpt-4o-mini" python run_tests_navi.py \
-        --sut "IPA_YELP" \
+Standalone LLM: To run a simplified example with navigation recommendation based on a pure LLM you can run (here a local LLM is used):
+
+```bash
+DEPLOYMENT_NAME="llama3.2" python run_tests_navi.py \
+        --sut "IPA_LOS" \
+        --judge "llama3.2" \
         --population_size 5 \
         --n_generations 5 \
         --algorithm "nsga2" \
@@ -73,17 +78,82 @@ DEPLOYMENT_NAME="gpt-4o-mini" python run_tests_navi.py \
         --seed 1
 ```
 
+RAG-based SUT: To run a more advanced example where a the RAG-based ConvNavi tool is asked to provide a place recommendation, first setup the ConvNavi tool. After running the tool in server mode, execute the following code for test generation:
+
+```bash
+DEPLOYMENT_NAME="llama3.2" python run_tests_navi.py \
+        --sut "IPA_YELP" \
+        --judge "llama3.2" \
+        --population_size 5 \
+        --n_generations 5 \
+        --algorithm "nsga2" \
+        --max_time "00:10:00" \
+        --features_config "configs/navi_features.json"\
+        --no_wandb \
+        --use_rag \
+        --seed 1
+```
+
 The execution should generate 25 test cases and write down all results in a folder called **results**.
 
-For input generation, STELLAR distinguishes between style, content and perturbation features. 
-The features are defined in the format as implemented in [navi_features.json](configs/navi_features.json).
-You can modify theses values to see how it affects generated test inputs.
+### Safety 
+
+To test standalone LLMs for handling malicious user inputs run:
+
+```bash
+python run_tests_safety.py \
+        --population_size 5 \
+        --sut "llama3.2" \
+        --judge "llama3.2" \
+        --n_generations 5 \
+        --algorithm nsga2 \
+        --max_time "00:01:00" \
+        --results_folder "/results/" \
+        --features_config "configs/safety_features.json"\
+        --seed 1
+```        
+## Search Configuration
+
+STELLAR distinguishes between style, content and perturbation features for test generation. 
+The features are defined in the format as shown in the navigational case study in [navi_features.json](configs/navi_features.json).
+Modify theses values to see how it affects generated test inputs.
+
+Following algorithms are integrated: 
+
+- **Random Search** (Randomized Testing) - rs
+- [**NSGA-II**](`opensbt/algorithm/nsga2_optimizer.py`) (Genetic Algorithm) - nsga2
+- [**ASTRAL**](TODO) (Full Coverage Testing Safety) - astral
+- [**T-wise**]() (Combinatorial Testing) - gs
+
+
+Algorithms that exist in pymoo can be also used by implementing interfaces from [OpenSBT](https://opensbt.github.io/opensbt-core/).
+
+## Customization
+
+You can define your own custom problem as done for the Safety or Navigation case study. 
+We have provided interfaces and instructions as described in [CUSTOMIZATION](CUSTOMIZATION.md).
+
+## Wandb Integration
+
+STELLAR integrates wandb for experiment progress monitoring and results tracking.
+Enable/disable wandb usage by the --wandb flag. Prior logging you need to create a Project at wandb, login via the cli passing the wandb key and update the wandb project name in the main application file. All result artefacts are uploaded to the corresponding run and can be downloaded later for analysis.
+
+```python
+weave.init("dev")
+wandb.init(
+        entity="<your wandb group>",                  # team
+        project="<your project name>",                  # the project name
+        name=problem_name,                  # run name
+        group=datetime.now().strftime("%d-%m-%Y"),  # group by date
+        tags=tags,
+)
+```
 
 ## Replication
 
 ### RQ0
 
-To run the judge evaluation you can use the following script to collect judge results for a given set of question answer pairs. The backend LLM of the LLM-application can be directly set via the __deployment_name__ passed in the commands (here: gpt-4o-mini). 
+To replicate the paper results and run the judge evaluation you can use the following script to collect judge results for a given set of question answer pairs. The backend LLM of the LLM-application can be directly set via the __deployment_name__ passed in the commands (here: gpt-4o-mini). 
 
 ```bash
 timestamp=$(date +'%Y-%m-%d_%H-%M-%S')
@@ -263,8 +333,31 @@ python -m analysis.rq12.get_analysis_navi
 You can set the oracle threshold using __th_content=0.75__ and  __th_response=0.75__ to observe how the metrics results vary when the oracle changes.
 
 
-## Customization
+## Citation
 
-You can define your own custom problem as done for the Safety or Navigation case study. 
-We have provided interfaces and instructions as described in [CUSTOMIZATION](CUSTOMIZATION.md).
+A preprint of the paper can be found on [arXiv](https://arxiv.org/abs/2503.07222).
 
+If you use our work in your research, if you extend it, or if you simply like it, please cite it in your publications. 
+
+Here is an example BibTeX entry:
+
+```
+@misc{sorokin2026stellar,
+      title={STELLAR: A Search-Based Testing Framework for Large Language Model Applications}, 
+      author={Lev Sorokin and Ivan Vasilev and Ken E. Friedl and Andrea Stocco},
+      year={2026},
+      eprint={2601.00497},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2601.00497}, 
+}
+```
+
+## License ##
+
+The software is distributed under MIT license. See the [license](/LICENSE) file.
+
+## Authors
+
+Lev Sorokin (lev.sorokin@tum.de) \
+Ivan Vasilev (ivan.vasilev@tum.de)
